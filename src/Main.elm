@@ -8,14 +8,14 @@ import Html.Events exposing (onClick)
 -- MODEL
 
 
-type alias Model svgMsg =
+type alias Model t =
     { cadena : String
-    , svgs : Svg svgMsg
+    , svgs : Svg t
     , status : Bool
     }
 
 
-init : ( Model msg, Cmd Msg )
+init : ( Model t, Cmd t )
 init =
     ( Model "Hello" (Svg.text "Hello") False, Cmd.none )
 
@@ -35,19 +35,21 @@ type Msg
 -- VIEW
 
 
-view : Model msg -> Html Msg
+view : Model t -> Html t
 view model =
     div []
-        [ div []
-            [ Html.text model.cadena ]
-        , if model.status then
-            div []
-                [ button [ onClick Collapse ] [ Html.text "Collapse" ]
-                , Html.text model.cadena
-                ]
-          else
-            div []
-                [ button [ onClick Expand ] [ Html.text "Expand" ] ]
+        [ --     div []
+          --     [ Html.text model.cadena ]
+          -- , if model.status then
+          --     div []
+          --         [ button [ onClick Collapse ] [ Html.text "Collapse" ]
+          --         , Html.text model.cadena
+          --         ]
+          --   else
+          --     div []
+          --         [ button [ onClick Expand ] [ Html.text "Expand" ] ]
+          --,
+          model.svgs
         ]
 
 
@@ -59,7 +61,7 @@ view model =
 -- UPDATE
 
 
-update : Msg -> Model msg -> ( Model msg, Cmd Msg )
+update : Msg -> Model t -> ( Model t, Cmd t )
 update msg model =
     case msg of
         NoOp ->
@@ -90,7 +92,7 @@ update msg model =
 -- SUBSCRIPTIONS
 
 
-subscriptions : Model msg -> Sub Msg
+subscriptions : Model t -> Sub t
 subscriptions model =
     Sub.none
 
@@ -99,7 +101,7 @@ subscriptions model =
 -- MAIN
 
 
-main : Program Never (Model msg) Msg
+main : Program Never (Model Msg) Msg
 main =
     program
         { init = init

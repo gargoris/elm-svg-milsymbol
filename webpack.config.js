@@ -1,4 +1,5 @@
 var path = require("path");
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
   entry: {
@@ -10,16 +11,14 @@ module.exports = {
   output: {
     path: path.resolve(__dirname + '/dist'),
     filename: '[name].js',
+    chunkFilename: "[id].js"
   },
 
   module: {
     rules: [
       {
-        test: /\.(css|scss)$/,
-        use: [
-          'style-loader',
-          'css-loader',
-        ]
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract("style-loader", "css-loader")
       },
       {
         test:    /\.html$/,
@@ -48,6 +47,9 @@ module.exports = {
     inline: true,
     stats: { colors: true },
   },
-
+    // Use the plugin to specify the resulting filename (and add needed behavior to the compiler)
+  plugins: [
+      new ExtractTextPlugin("[name].css")
+  ]
 
 };
