@@ -1,12 +1,33 @@
 'use strict';
 
-import * as ms from 'milsymbol';
-export function processSymbol(description) {
-    function devSomething(a) {
-        var locualo = new ms.Symbol(a);
-        var loQue = locualo.drawInstructions;
-    };
+var ms = require('milsymbol');
+var _ = require('lodash');
 
-    var dev = devSomething(description);
-    return dev;
+export function processSymbol(description) {
+    var locualo = new ms.Symbol(description);
+    var loQue = locualo.drawInstructions;
+    var data =   { id : 1
+        , symbolType :"none" 
+        , path : locualo.asSVG()
+        , cx : 0.45
+        , cy : 0.45
+        , r : 0.45
+        , x : "String"
+        , y : "String"
+        , degree : "String"
+        , textAnchor : "String"
+        , fontSize : "String"
+        , fontFamily : "String"
+        , fontweight : "String"
+        , factor : 0.45
+        , stroke : "String"
+        , strokewidth : "String"
+        , strokedasharray : "String"
+        , linecap : "String"
+        , fill : "String"
+        , fillopacity : "String"
+        , drawChild: 0
+        }
+    
+    return data;
 };

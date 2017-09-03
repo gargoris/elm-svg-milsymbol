@@ -14,18 +14,18 @@ module.exports = {
   },
   
   plugins: [
-    new UglifyJSPlugin({
-      uglifyOptions: {
-        output: {
-          comments: false,
-          beautify: false,
-        },
-        compress: true,
-        warnings: false
-      },
-      parallel: true
+    // new UglifyJSPlugin({
+    //   uglifyOptions: {
+    //     output: {
+    //       comments: false,
+    //       beautify: false,
+    //     },
+    //     compress: true,
+    //     warnings: false
+    //   },
+    //   parallel: true
 
-    })
+    // })
   ],
   module: {
     rules: [
@@ -44,7 +44,7 @@ module.exports = {
       {
         test:    /\.elm$/,
         exclude: [/elm-stuff/, /node_modules/],
-        loader:  'elm-webpack-loader?verbose=true&warn=true',
+        loader:  'elm-webpack-loader?verbose=true&warn=true&debug=true',
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,

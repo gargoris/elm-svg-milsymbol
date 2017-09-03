@@ -1,7 +1,9 @@
 module Main exposing (..)
 
 import Html exposing (..)
-import Svg exposing (..)
+import Svg as S exposing (..)
+import Html.Attributes as HA exposing (..)
+import Html.Events exposing (onInput)
 
 
 --import Html.Events exposing (onClick)
@@ -12,16 +14,16 @@ import PortsOfMil exposing (DataMilSymbol, prepareSymbol, getSymbol)
 -- MODEL
 
 
-type alias Model t =
+type alias Model =
     { cadena : String
-    , svgs : Svg t
+    , svgs : Html Msg
     , status : Bool
     }
 
 
-init : ( Model t, Cmd t )
+init : ( Model, Cmd Msg )
 init =
-    ( Model "Hello" (Svg.text "Hello") False, Cmd.none )
+    ( Model "Hello" (S.text "Hello") False, Cmd.none )
 
 
 
@@ -40,28 +42,26 @@ type Msg
 -- VIEW
 
 
-view : Model t -> Html t
+view : Model -> Html Msg
 view model =
     div []
-        [ form
+        [ label [ HA.for "milSymbolCode" ] [ Html.text "Código" ]
+        , input
+            [ HA.id "milSymbolCode", type_ "text", placeholder "MilSymbol code", onInput NewString ]
             []
-            [ input
-                [--id "milSymbolCode"
-                ]
-                []
-            ]
-        , --     div []
-          --     [ Html.text model.cadena ]
-          -- , if model.status then
-          --     div []
-          --         [ button [ onClick Collapse ] [ Html.text "Collapse" ]
-          --         , Html.text model.cadena
-          --         ]
-          --   else
-          --     div []
-          --         [ button [ onClick Expand ] [ Html.text "Expand" ] ]
-          --,
-          model.svgs
+
+        --     div []
+        --     [ Html.text model.cadena ]
+        -- , if model.status then
+        --     div []
+        --         [ button [ onClick Collapse ] [ Html.text "Collapse" ]
+        --         , Html.text model.cadena
+        --         ]
+        --   else
+        --     div []
+        --         [ button [ onClick Expand ] [ Html.text "Expand" ] ]
+        --,
+        , model.svgs
         ]
 
 
@@ -73,7 +73,7 @@ view model =
 -- UPDATE
 
 
-update : Msg -> Model t -> ( Model t, Cmd Msg )
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         NoOp ->
@@ -84,13 +84,16 @@ update msg model =
         NewString a ->
             ( { model
                 | cadena = a
-                , svgs = Svg.text a
               }
             , prepareSymbol a
             )
 
         NewSymbolSVG s ->
-            ( model, Cmd.none )
+            ( { model
+                | svgs = parseSVG s
+              }
+            , Cmd.none
+            )
 
         Expand ->
             ( { model | status = True }
@@ -107,7 +110,7 @@ update msg model =
 -- SUBSCRIPTIONS
 
 
-subscriptions : Model t -> Sub Msg
+subscriptions : Model -> Sub Msg
 subscriptions model =
     getSymbol NewSymbolSVG
 
@@ -116,7 +119,7 @@ subscriptions model =
 -- MAIN
 
 
-main : Program Never (Model Msg) Msg
+main : Program Never Model Msg
 main =
     program
         { init = init
@@ -124,3 +127,8 @@ main =
         , update = update
         , subscriptions = subscriptions
         }
+
+
+parseSVG : DataMilSymbol -> Svg msg
+parseSVG d =
+    S.text d.path
