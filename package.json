@@ -24,6 +24,8 @@
     "rimraf": "^2.6.1",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
+    "uglify-js": "^3.0.28",
+    "uglifyjs-webpack-plugin": "^0.4.6",
     "url-loader": "^0.5.9",
     "webpack": "^3.5.5",
     "webpack-dev-server": "^2.7.1",
@@ -35,5 +37,9 @@
     "client": "webpack-dev-server --port 3000 --hot --inline",
     "start": "nf start",
     "prebuild": "rimraf dist"
+  },
+  "dependencies": {
+    "image-webpack-loader": "^3.4.0",
+    "milsymbol": "^1.3.0"
   }
 }

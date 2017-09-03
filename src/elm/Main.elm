@@ -2,7 +2,11 @@ module Main exposing (..)
 
 import Html exposing (..)
 import Svg exposing (..)
-import Html.Events exposing (onClick)
+
+
+--import Html.Events exposing (onClick)
+
+import PortsOfMil exposing (DataMilSymbol, prepareSymbol, getSymbol)
 
 
 -- MODEL
@@ -27,6 +31,7 @@ init =
 type Msg
     = NoOp
     | NewString String
+    | NewSymbolSVG DataMilSymbol
     | Expand
     | Collapse
 
@@ -38,7 +43,14 @@ type Msg
 view : Model t -> Html t
 view model =
     div []
-        [ --     div []
+        [ form
+            []
+            [ input
+                [--id "milSymbolCode"
+                ]
+                []
+            ]
+        , --     div []
           --     [ Html.text model.cadena ]
           -- , if model.status then
           --     div []
@@ -61,7 +73,7 @@ view model =
 -- UPDATE
 
 
-update : Msg -> Model t -> ( Model t, Cmd t )
+update : Msg -> Model t -> ( Model t, Cmd Msg )
 update msg model =
     case msg of
         NoOp ->
@@ -74,8 +86,11 @@ update msg model =
                 | cadena = a
                 , svgs = Svg.text a
               }
-            , Cmd.none
+            , prepareSymbol a
             )
+
+        NewSymbolSVG s ->
+            ( model, Cmd.none )
 
         Expand ->
             ( { model | status = True }
@@ -92,9 +107,9 @@ update msg model =
 -- SUBSCRIPTIONS
 
 
-subscriptions : Model t -> Sub t
+subscriptions : Model t -> Sub Msg
 subscriptions model =
-    Sub.none
+    getSymbol NewSymbolSVG
 
 
 
