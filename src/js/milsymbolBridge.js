@@ -7,7 +7,7 @@ export function processSymbol(description) {
     var locualo = new ms.Symbol(description);
     var loQue = locualo.drawInstructions;
     var data =   { id : 1
-        , symbolType :"none" 
+        , symbolType :"PrimerPremio" 
         , path : locualo.asSVG()
         , cx : 0.45
         , cy : 0.45
