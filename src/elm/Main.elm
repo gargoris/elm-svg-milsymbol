@@ -45,32 +45,42 @@ type Msg
 
 view : Model -> Html Msg
 view model =
-    div []
-        [ label [ HA.for "milSymbolCode", HA.class "" ] [ Html.text "Código" ]
-        , input
-            [ HA.id "milSymbolCode", HA.type_ "text", placeholder "MilSymbol code", onInput NewString ]
-            []
+    Html.form []
+        [ div [ HA.class "form-group" ]
+            [ label [ HA.for "milSymbolCode", HA.class "" ] [ Html.text "Código" ]
+            , input
+                [ HA.id "milSymbolCode"
+                , HA.attribute "aria-describedby" "emailHelp"
+                , HA.class "form-control"
+                , HA.type_ "text"
+                , placeholder "MilSymbol code"
+                , onInput NewString
+                ]
+                []
 
-        --     div []
-        --     [ Html.text model.cadena ]
-        -- , if model.status then
-        --     div []
-        --         [ button [ onClick Collapse ] [ Html.text "Collapse" ]
-        --         , Html.text model.cadena
-        --         ]
-        --   else
-        --     div []
-        --         [ button [ onClick Expand ] [ Html.text "Expand" ] ]
-        --,
-        , model.svgs
+            --     div []
+            --     [ Html.text model.cadena ]
+            -- , if model.status then
+            --     div []
+            --         [ button [ onClick Collapse ] [ Html.text "Collapse" ]
+            --         , Html.text model.cadena
+            --         ]
+            --   else
+            --     div []
+            --         [ button [ onClick Expand ] [ Html.text "Expand" ] ]
+            --,
+            , small
+                [ HA.id "emailHelp"
+                , HA.class "form-text text-muted"
+                ]
+                [ Html.text "Write your own symbol definition"
+                ]
+            , model.svgs
+            ]
         ]
 
 
 
--- , div
---     []
---     [ model.svgs ]
--- ]
 -- UPDATE
 
 
