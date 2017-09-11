@@ -1,6 +1,6 @@
 port module PortsOfMil exposing (..)
 
--- A DataMilSymbol is a description for a svg node.
+-- A DataMilSymbol is a description for a svg node, with a lot of redundant data...
 
 
 type alias DataMilSymbol =
@@ -24,7 +24,7 @@ type alias DataMilSymbol =
     , linecap : String
     , fill : String
     , fillopacity : String
-    , drawChild : Int -- If the type is a transformation, here will be the inner node
+    , drawChild : Int -- If the type is a transformation, here will be the id of inner node
     }
 
 

@@ -46,7 +46,7 @@ type Msg
 view : Model -> Html Msg
 view model =
     div []
-        [ label [ HA.for "milSymbolCode" ] [ Html.text "Código" ]
+        [ label [ HA.for "milSymbolCode", HA.class "" ] [ Html.text "Código" ]
         , input
             [ HA.id "milSymbolCode", HA.type_ "text", placeholder "MilSymbol code", onInput NewString ]
             []
