@@ -45,7 +45,7 @@ type Msg
 
 view : Model -> Html Msg
 view model =
-    Html.form []
+    Html.form [ HA.class "form-horizontal" ]
         [ div [ HA.class "form-group" ]
             [ label [ HA.for "milSymbolCode", HA.class "" ] [ Html.text "Código" ]
             , input
@@ -75,7 +75,14 @@ view model =
                 ]
                 [ Html.text "Write your own symbol definition"
                 ]
-            , model.svgs
+            ]
+        , div [ HA.class "form-group" ]
+            [ h4 []
+                [ Html.text "The Symbol"
+                ]
+            ]
+        , div [ HA.class "form-group" ]
+            [ model.svgs
             ]
         ]
 

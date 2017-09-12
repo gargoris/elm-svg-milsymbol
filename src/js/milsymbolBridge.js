@@ -6,6 +6,11 @@ var _ = require('lodash');
 export function processSymbol(description) {
     var locualo = new ms.Symbol(description);
     var loQue = locualo.drawInstructions;
+    var m = _.reduce(loQue, function (acc, val){
+        var valAct = acc[0] + 1;
+        var t = []
+        return [valAct, _.concat(acc[1], t)]
+    }, [-1,[]]);
     var data =   { id : 1
         , symbolType :"PrimerPremio" 
         , path : locualo.asSVG()

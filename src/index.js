@@ -3,6 +3,7 @@
 require('ace-css/css/ace.css');
 require('font-awesome/css/font-awesome.css');
 require('./css/bootswatch.css')
+require ('./css/docs.css') 
 // require('./blog.css');
 var mlBridge = require('./js/milsymbolBridge.js')
 // Require index.html so it gets copied to dist
