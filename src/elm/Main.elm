@@ -9,7 +9,7 @@ import Html.Events exposing (onInput)
 
 --import Html.Events exposing (onClick)
 
-import PortsOfMil exposing (DataMilSymbol, prepareSymbol, getSymbol)
+import PortsOfMil exposing (..)
 
 
 -- MODEL
@@ -156,16 +156,26 @@ parseSVG d =
         , SA.width "640"
         , SA.height "480"
         ]
-        [ S.text_
-            [ SA.fontFamily "serif"
-            , SA.fontSize "20"
-            , SA.fill "#000000"
-            , SA.id "svg_2"
-            , SA.y "146"
-            , SA.x "351"
-            ]
-            [ S.text d.symbolType ]
-        ]
+        (mapDrawingInstructions
+            d.draws
+        )
+
+
+mapDrawingInstructions : List DataMilDrawinInstructions -> List (Svg msg)
+mapDrawingInstructions d =
+    List.map
+        (\p ->
+            S.text_
+                [ SA.fontFamily "serif"
+                , SA.fontSize "20"
+                , SA.fill "#000000"
+                , SA.id "svg_2"
+                , SA.y "146"
+                , SA.x "351"
+                ]
+                [ S.text p.symbolType ]
+        )
+        d
 
 
 
