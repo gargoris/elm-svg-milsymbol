@@ -3,6 +3,15 @@ port module PortsOfMil exposing (..)
 -- A DataMilSymbol is a description for a svg node, with a lot of redundant data...
 
 
+type alias DrawProperties =
+    { fill : String
+    , fillopacity : String
+    , stroke : String
+    , strokewidth : String
+    , strokedasharray : String
+    }
+
+
 type alias DataMilDrawinInstructions =
     { id : Int
     , symbolType : String
@@ -18,13 +27,10 @@ type alias DataMilDrawinInstructions =
     , fontFamily : String
     , fontweight : String
     , factor : Float
-    , stroke : String
-    , strokewidth : String
-    , strokedasharray : String
+    , dP : DrawProperties
     , linecap : String
-    , fill : String
-    , fillopacity : String
-    , drawChild : Int -- If the type is a transformation, here will be the id of inner node
+    , drawParent : Int -- maybe this instruction is child of a transformation
+    , svg : String
     }
 
 
