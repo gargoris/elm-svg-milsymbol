@@ -5,10 +5,10 @@ port module PortsOfMil exposing (..)
 
 type alias DrawProperties =
     { fill : String
-    , fillopacity : String
+    , fillopacity : Maybe Float
     , stroke : String
-    , strokewidth : String
-    , strokedasharray : String
+    , strokewidth : Maybe Float
+    , strokedasharray : Maybe String
     }
 
 
@@ -19,24 +19,24 @@ type alias DataMilDrawinInstructions =
     , cx : Float
     , cy : Float
     , r : Float
-    , x : String
-    , y : String
-    , degree : String
+    , x : Float
+    , y : Float
+    , degree : Float
     , textAnchor : String
-    , fontSize : String
+    , fontSize : Float
     , fontFamily : String
     , fontweight : String
     , factor : Float
     , dP : DrawProperties
     , linecap : String
     , drawParent : Int -- maybe this instruction is child of a transformation
-    , svg : String
+    , svg : Maybe String
     }
 
 
 type alias DataMilSymbol =
     { draws : List DataMilDrawinInstructions
-    , props : DataMilSymbolProperties
+    , props : Maybe DataMilSymbolProperties
     }
 
 

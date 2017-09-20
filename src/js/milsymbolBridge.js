@@ -9,17 +9,18 @@ export function processSymbol(description) {
         cx: 0,
         cy: 0,
         r: 0,
-        x: "",
-        y: "",
-        degree: "",
+        x: 0,
+        y: 0,
+        degree: 0,
         textAnchor: "",
-        fontSize: "",
+        fontSize: 0,
         fontFamily: "",
         fontweight: "",
         factor: 0,
         dP: null,
         linecap: "",
-        drawParent: -1
+        drawParent: -1,
+        svg: null
     };
     var reduxFunction = function (acc, val) {
         var valAct = acc[0] + 1;
@@ -29,11 +30,11 @@ export function processSymbol(description) {
             id: valAct,
             symbolType: val.type,
             dP: {
-                fill: val.fill,
-                fillopacity: val.fillopacity,
+                fill: _.isBoolean(val.fill) ? "" : val.fill,
+                fillopacity: _.isNil(val.fillopacity) ? null : val.fillopacity,
                 stroke: val.stroke,
-                strokewidth: val.strokewidth,
-                strokedasharray: val.strokedasharray
+                strokewidth: _.isNil(val.strokewidth) ? null : val.strokewidth,
+                strokedasharray: _.isNil(val.strokedasharray) ? null : val.strokedasharray
             }
         })), ['draw', 'type']);
 
