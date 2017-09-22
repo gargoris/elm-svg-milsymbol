@@ -19,7 +19,7 @@ type alias Model =
     { cadena : String
     , svgs : Html Msg
     , status : Bool
-    , drawingInst : Maybe (List DataMilDrawinInstructions)
+    , drawingInst : Maybe DataMilSymbol
     }
 
 
@@ -110,7 +110,7 @@ update msg model =
         NewSymbolSVG s ->
             ( { model
                 | svgs = parseSVG s
-                , drawingInst = Maybe.Just s.draws
+                , drawingInst = Maybe.Just s
               }
             , Cmd.none
             )

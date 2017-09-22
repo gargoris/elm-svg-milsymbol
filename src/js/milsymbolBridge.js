@@ -43,9 +43,18 @@ export function processSymbol(description) {
     var locualo = new ms.Symbol(description);
     var loQue = locualo.drawInstructions;
     var m = _.reduce(loQue, reduxFunction, [-1, []]);
+    var ptemp = locualo.getProperties();
+    var baseG = {
+        bbox : ptemp.baseGeometry.bbox,
+        g : {
+            typeG : ptemp.baseGeometry.g.type,
+            d : ptemp.baseGeometry.g.d
+        }
+    }
+    ptemp.baseGeometry = baseG;
 
     return {
         draws: m[1],
-        props: null
+        props: ptemp
     };
 };
