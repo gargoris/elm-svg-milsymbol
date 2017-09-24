@@ -19,7 +19,7 @@ export function processSymbol(description) {
         factor: 0,
         dP: null,
         linecap: "",
-        drawParent: -1,
+        drawParent: null,
         svg: null
     };
     var reduxFunction = function (acc, val) {
@@ -37,8 +37,11 @@ export function processSymbol(description) {
                 strokedasharray: _.isNil(val.strokedasharray) ? null : val.strokedasharray
             }
         })), ['draw', 'type']);
-
-        return [valAct, _.concat(acc[1], t)]
+        var h2 = [valAct, [t]]
+        if (val.list.length > 0 ) {
+            h2 =  _.reduce(val.list, reduxFunction, h2);
+        }
+        return [h2[0], _.concat(acc[1], h2[1])]
     };
     var locualo = new ms.Symbol(description);
     var loQue = locualo.drawInstructions;

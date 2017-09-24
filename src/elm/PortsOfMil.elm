@@ -29,7 +29,7 @@ type alias DataMilDrawinInstructions =
     , factor : Float
     , dP : DrawProperties
     , linecap : String
-    , drawParent : Int -- maybe this instruction is child of a transformation
+    , drawParent : Maybe Int -- maybe this instruction is child of a transformation
     , svg : Maybe String
     }
 
@@ -40,28 +40,17 @@ type alias DataMilSymbol =
     }
 
 
-
--- type alias BaseGeometry =
---     { affiliation : String
---     , -- Affiliation it belongs to (Friend/Hostile...)
---       baseAffilation : String
---     , -- Dimension it belongs to (Air/Ground...)
---       baseDimension : String
---     , -- Dimension it is shown as (Air/Ground...) for example Ground Equipment is shown with the same shape as Sea.
---       dimension : String
---     , -- Is the dimension unknown
---       dimensionUnknown : Bool
---     }
-
-
 type alias BaseGeometry =
     { g : TypeG
     , bbox : BoundingBox
     }
-type alias TypeG ={
-  d: String,
-  typeG:String
-}
+
+
+type alias TypeG =
+    { d : String
+    , typeG : String
+    }
+
 
 type alias BoundingBox =
     { x1 : Float
