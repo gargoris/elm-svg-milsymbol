@@ -23,25 +23,32 @@ export function processSymbol(description) {
         svg: null
     };
     var reduxFunction = function (acc, val) {
-        var valAct = acc[0] + 1;
-        var listAct = acc[1];
-        //If the object has a list of draw, call this function over the list
-        var t = _.omit(_.assign(data, _.assign(val, {
-            id: valAct,
-            symbolType: val.type,
-            dP: {
-                fill: _.isBoolean(val.fill) ? "" : val.fill,
-                fillopacity: _.isNil(val.fillopacity) ? null : val.fillopacity,
-                stroke: val.stroke,
-                strokewidth: _.isNil(val.strokewidth) ? null : val.strokewidth,
-                strokedasharray: _.isNil(val.strokedasharray) ? null : val.strokedasharray
+        var parent = null;
+        function reduxInner(acc, val) {
+            var valAct = acc[0] + 1;
+            var listAct = acc[1];
+            //If the object has a list of draw, call this function over the list
+            var t = _.omit(_.assign(data, _.assign(val, {
+                id: valAct,
+                symbolType: val.type,
+                dP: {
+                    fill: _.isBoolean(val.fill) ? "" : val.fill,
+                    fillopacity: _.isNil(val.fillopacity) ? null : val.fillopacity,
+                    stroke: _.isNil(val.stroke) ? null : val.stroke,
+                    strokewidth: _.isNil(val.strokewidth) ? null : val.strokewidth,
+                    strokedasharray: _.isNil(val.strokedasharray) ? null : val.strokedasharray
+                },
+                drawParent : parent
+            })), ['draw', 'type']);
+            var h2 = [valAct, [t]]
+            if (!_.isNil(val.draw) && val.draw.length > 0) {
+                parent = valAct;
+                h2 = _.reduce(val.draw, reduxInner, h2);
+                parent = null;
             }
-        })), ['draw', 'type']);
-        var h2 = [valAct, [t]]
-        if (val.list.length > 0 ) {
-            h2 =  _.reduce(val.list, reduxFunction, h2);
-        }
-        return [h2[0], _.concat(acc[1], h2[1])]
+            return [h2[0], _.concat(acc[1], h2[1])];
+        };
+        return reduxInner(acc, val);
     };
     var locualo = new ms.Symbol(description);
     var loQue = locualo.drawInstructions;

@@ -6,7 +6,7 @@ port module PortsOfMil exposing (..)
 type alias DrawProperties =
     { fill : String
     , fillopacity : Maybe Float
-    , stroke : String
+    , stroke : Maybe String
     , strokewidth : Maybe Float
     , strokedasharray : Maybe String
     }
