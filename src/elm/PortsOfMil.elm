@@ -4,7 +4,7 @@ port module PortsOfMil exposing (..)
 
 
 type alias DrawProperties =
-    { fill : String
+    { fill : Maybe String
     , fillopacity : Maybe Float
     , stroke : Maybe String
     , strokewidth : Maybe Float
@@ -47,8 +47,8 @@ type alias BaseGeometry =
 
 
 type alias TypeG =
-    { d : String
-    , typeG : String
+    { d : Maybe String
+    , typeG : Maybe String
     }
 
 

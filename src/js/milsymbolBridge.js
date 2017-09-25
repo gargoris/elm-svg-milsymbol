@@ -32,7 +32,7 @@ export function processSymbol(description) {
                 id: valAct,
                 symbolType: val.type,
                 dP: {
-                    fill: _.isBoolean(val.fill) ? "" : val.fill,
+                    fill: _.isNil(val.fill) || _.isBoolean(val.fill) ? null : val.fill,
                     fillopacity: _.isNil(val.fillopacity) ? null : val.fillopacity,
                     stroke: _.isNil(val.stroke) ? null : val.stroke,
                     strokewidth: _.isNil(val.strokewidth) ? null : val.strokewidth,
@@ -58,7 +58,7 @@ export function processSymbol(description) {
         bbox : ptemp.baseGeometry.bbox,
         g : {
             typeG : ptemp.baseGeometry.g.type,
-            d : ptemp.baseGeometry.g.d
+            d : _.isNil(ptemp.baseGeometry.g.d) ? null: ptemp.baseGeometry.g.d
         }
     }
     ptemp.baseGeometry = baseG;
