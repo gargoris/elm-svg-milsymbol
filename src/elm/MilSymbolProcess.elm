@@ -4,43 +4,96 @@ import PortsOfMil exposing (..)
 import Dict exposing (..)
 
 
-type alias DataMilDrawinInsInner =
-    { id : Int
-    , symbolType : String
-    , path : String
-    , cx : Float
-    , cy : Float
-    , r : Float
-    , x : Float
-    , y : Float
-    , degree : Float
-    , textAnchor : String
-    , fontSize : Float
-    , fontFamily : String
-    , fontweight : String
-    , factor : Float
-    , dP : DrawProperties
-    , linecap : String
-    , drawParent : Maybe Int -- maybe this instruction is child of a transformation
-    , svg : Maybe String
-    }
+type SortedDrawingInstruction
+    = SortedDrawingInstruction
+        { id : Int
+        , inst : DrawingInstruction
+        }
 
 
-type alias DataMilInnerSymbol =
-    { draws : List DataMilDrawinInsInner
+type DrawingInstruction
+    = Translate
+        { x : Float
+        , y : Float
+        , draw : List SortedDrawingInstruction
+        }
+    | Rotate
+        { degree : Float
+        , x : Float
+        , y : Float
+        , draw : List SortedDrawingInstruction
+        }
+    | Scale
+        { factor : Float
+        , draw : List SortedDrawingInstruction
+        }
+    | Path
+        { -- SVG path data
+          d : String
+        , -- Fill color  or set to false if none
+          fill : String
+        , -- Fill opacity {Optional}
+          fillopacity : Maybe Float
+        , -- Stroke color  or set to false if none
+          stroke : String
+        , -- {Optional}
+          strokedasharray : Maybe String
+        , --Width of the stroke {Optional}
+          strokewidth : Maybe Float
+        }
+    | Circle
+        { cx : Float
+        , cy : Float
+        , r : Float
+        , -- Fill color  or set to false if none
+          fill : String
+        , -- Fill opacity {Optional}
+          fillopacity : Maybe Float
+        , -- Stroke color  or set to false if none
+          stroke : String
+        , -- {Optional}
+          strokedasharray : Maybe String
+        , --Width of the stroke {Optional}
+          strokewidth : Maybe Float
+        }
+    | Text
+        { x : Float
+        , y : Float
+        , textanchor : String
+        , fontsize : Float
+        , fontfamily : String
+        , fontweight : String
+        , -- Fill color  or set to false if none
+          fill : String
+        , -- Fill opacity {Optional}
+          fillopacity : Maybe Float
+        , -- Stroke color  or set to false if none
+          stroke : String
+        , -- {Optional}
+          strokedasharray : Maybe String
+        , --Width of the stroke {Optional}
+          strokewidth : Maybe Float
+        }
+    | Svg
+        { svg : String
+        }
+
+
+type alias DataMilSymbol =
+    { draws : List SortedDrawingInstruction
     , props : Maybe DataMilSymbolPropertiesInner
     }
 
 
 type alias DataMilSymbolPropertiesInner =
-    DataMilSymbolProperties
+    DataMilSymbolPropertiesPort
 
 
 
 -- The temporary result
 
 
-convert : DataMilDrawinInstructions -> Dict Int DataMilDrawinInsInner -> Dict Int DataMilDrawinInsInner
+convert : DataMilDrawinInstructionsPort -> Dict Int SortedDrawingInstruction -> Dict Int SortedDrawingInstruction
 convert i d =
     let
         m =
@@ -58,7 +111,7 @@ convert i d =
 -- here be dragons: recibe a DataMilSymbol from outside and return a datamilsymbol correctly "indented"
 
 
-transformInner : DataMilSymbol -> Maybe DataMilInnerSymbol
+transformInner : DataMilSymbolPort -> Maybe DataMilSymbol
 transformInner d =
     --foldl : (a -> b -> b) -> b -> List a -> b
     Nothing

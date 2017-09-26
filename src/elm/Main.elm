@@ -19,7 +19,7 @@ type alias Model =
     { cadena : String
     , svgs : Html Msg
     , status : Bool
-    , drawingInst : Maybe DataMilSymbol
+    , drawingInst : Maybe DataMilSymbolPort
     }
 
 
@@ -35,7 +35,7 @@ init =
 type Msg
     = NoOp
     | NewString String
-    | NewSymbolSVG DataMilSymbol
+    | NewSymbolSVG DataMilSymbolPort
     | Expand
     | Collapse
 
@@ -149,7 +149,7 @@ main =
         }
 
 
-parseSVG : DataMilSymbol -> Svg msg
+parseSVG : DataMilSymbolPort -> Svg msg
 parseSVG d =
     S.svg
         [ SA.version "1.1"
@@ -163,7 +163,7 @@ parseSVG d =
         )
 
 
-mapDrawingInstructions : List DataMilDrawinInstructions -> List (Svg msg)
+mapDrawingInstructions : List DataMilDrawinInstructionsPort -> List (Svg msg)
 mapDrawingInstructions d =
     List.map
         (\p ->

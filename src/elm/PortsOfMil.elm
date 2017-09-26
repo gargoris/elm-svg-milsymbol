@@ -3,7 +3,7 @@ port module PortsOfMil exposing (..)
 -- A DataMilSymbol is a description for a svg node, with a lot of redundant data...
 
 
-type alias DrawProperties =
+type alias DrawPropertiesPort =
     { fill : Maybe String
     , fillopacity : Maybe Float
     , stroke : Maybe String
@@ -12,7 +12,7 @@ type alias DrawProperties =
     }
 
 
-type alias DataMilDrawinInstructions =
+type alias DataMilDrawinInstructionsPort =
     { id : Int
     , symbolType : String
     , path : String
@@ -27,16 +27,16 @@ type alias DataMilDrawinInstructions =
     , fontFamily : String
     , fontweight : String
     , factor : Float
-    , dP : DrawProperties
+    , dP : DrawPropertiesPort
     , linecap : String
     , drawParent : Maybe Int -- maybe this instruction is child of a transformation
     , svg : Maybe String
     }
 
 
-type alias DataMilSymbol =
-    { draws : List DataMilDrawinInstructions
-    , props : Maybe DataMilSymbolProperties
+type alias DataMilSymbolPort =
+    { draws : List DataMilDrawinInstructionsPort
+    , props : Maybe DataMilSymbolPropertiesPort
     }
 
 
@@ -60,7 +60,7 @@ type alias BoundingBox =
     }
 
 
-type alias DataMilSymbolProperties =
+type alias DataMilSymbolPropertiesPort =
     { -- Is it an Activity
       activity : Bool
     , -- Affiliation it is shown as (Friend/Hostile...)
@@ -123,4 +123,4 @@ port prepareSymbol : String -> Cmd msg
 -- ...and when the symbol is ready, we can receive it for parse and SVG creation in the elm side of the wall
 
 
-port getSymbol : (DataMilSymbol -> msg) -> Sub msg
+port getSymbol : (DataMilSymbolPort -> msg) -> Sub msg
