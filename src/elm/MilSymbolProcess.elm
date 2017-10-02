@@ -98,6 +98,14 @@ convert i d =
     let
         m =
             get i.id d
+
+        parent =
+            case i.drawParent of
+                Just p ->
+                    get p d
+
+                Nothing ->
+                    Nothing
     in
         case m of
             Just a ->
